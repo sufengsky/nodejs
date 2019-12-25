@@ -57,13 +57,56 @@ var moment=require("moment")
 
 // console.log(JSON.stringify(x))
 
-let d1='2019-12-19 09:43:00'
-let d2='2019-12-19 00:00:00'
+// let d1='2020-12-19 09:43:00'
+// let d2='2019-12-19 00:00:00'
 
-let a=moment(d1).format("YYYY-MM-DD")
-let b=moment(d2).format("YYYY-MM-DD")
-console.log(a)
-console.log(b)
+// let a=moment(d1).format("YYYY-MM-DD")
+// let b=moment(d2).format("YYYY-MM-DD")
+// console.log(a)
+// console.log(b)
 
-console.log(moment(a).diff(moment(b)))
-console.log(moment(b).diff(moment(a)))
+// // console.log(moment(a).diff(moment(b)))
+// // console.log(moment(b).diff(moment(a)))
+
+// console.log(moment(d1).diff(moment()))
+
+
+// //Promise编程初步 开始
+// // new Promise(function(resolve){
+// //     resolve(42);
+// // });
+// Promise.resolve(42).then(function(value){
+//     console.log(value);
+// });
+// //Promise编程初步 结束
+
+
+// var promise = new Promise(function (resolve) {
+//     console.log("inner promise"); // 1
+//     resolve(42);
+// });
+// promise.then(function (value) {
+//     console.log(value); // 3
+// });
+// console.log("outer promise"); // 2
+
+
+function taskA() {
+    console.log("Task A");  
+    throw new Error("TaskA error");  
+}
+function taskB() {
+    console.log("Task B");    
+}
+function onRejected(error) {
+    console.log("Catch Error: A or B", error);
+}
+function finalTask() {
+    console.log("Final Task");
+}
+var promise = Promise.resolve();
+promise
+    .then(taskA)
+    .then(taskB)
+    .catch(onRejected)
+    .then(finalTask);
