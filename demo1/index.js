@@ -91,22 +91,34 @@ var moment=require("moment")
 // console.log("outer promise"); // 2
 
 
-function taskA() {
-    console.log("Task A");  
-    throw new Error("TaskA error");  
-}
-function taskB() {
-    console.log("Task B");    
-}
-function onRejected(error) {
-    console.log("Catch Error: A or B", error);
-}
-function finalTask() {
-    console.log("Final Task");
-}
-var promise = Promise.resolve();
-promise
-    .then(taskA)
-    .then(taskB)
-    .catch(onRejected)
-    .then(finalTask);
+// function taskA() {
+//     console.log("Task A");  
+//     throw new Error("TaskA error");  
+// }
+// function taskB() {
+//     console.log("Task B");    
+// }
+// function onRejected(error) {
+//     console.log("Catch Error: A or B", error);
+// }
+// function finalTask() {
+//     console.log("Final Task");
+// }
+// var promise = Promise.resolve();
+// promise
+//     .then(taskA)
+//     .then(taskB)
+//     .catch(onRejected)
+//     .then(finalTask);
+
+// // 数组的过滤的方法及联合方法示例 开始
+// let ages = [32, 33, 16, 40];
+// let agesa=[30,34];
+
+// let result=ages.filter(item=>{return item>18});
+
+// result=result.concat(agesa);
+// result.forEach(x=>{
+//     console.log(x)
+// })
+// // 数组的过滤的方法及联合方法示例 结束
