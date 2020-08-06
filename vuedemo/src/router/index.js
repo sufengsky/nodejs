@@ -17,10 +17,16 @@ export default new Router({
       name: "home_index",
       component: () => import("@/pages/index")
     },
+    // {
+    //   path: "/demo/index",
+    //   name: "demo_index",
+    //   component: () => import("@/pages/demo/index")
+    // },
+
     {
-      path: "/demo/index",
-      name: "demo_index",
-      component: () => import("@/pages/demo/index")
+      path: "/test",
+      name: "calendar_test",
+      component: () => import("@/pages/demo/calendar")
     }
   ]
 })
