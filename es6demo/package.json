@@ -13,5 +13,8 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "async-validator": "^3.2.4"
+  },
+  "dependencies": {
+    "moment": "^2.29.0"
   }
 }
