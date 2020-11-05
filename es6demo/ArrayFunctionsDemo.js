@@ -27,5 +27,8 @@ let persons = [
 
 // console.log(persons.findIndex(x=>x.id==''))
 
-console.log(persons.map(x => { return { id: x.id, age: x.age } }))
+// console.log(persons.map(x => { return { id: x.id, age: x.age } }))
 
+let s='sufeng'
+let a=[s]
+console.log(a.join(","))
