@@ -167,7 +167,10 @@ function promiseChain(promiseCreatorList) {
         })
     }
 }
-
+//最简单的写法
+// promiseCreatorList.reduce((memo, cur) => {
+//     return memo.then(cur)
+// }, Promise.resolve())
 //promiseChain(promiseCreatorList)
 
 const promiseChain2 = async function (ps) {
@@ -175,6 +178,6 @@ const promiseChain2 = async function (ps) {
         const r = await p()
     }
 }
-promiseChain2(promiseCreatorList)
+// promiseChain2(promiseCreatorList)
 
-https://www.jianshu.com/p/005569312177
+// https://www.jianshu.com/p/005569312177
