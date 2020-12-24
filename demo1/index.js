@@ -1,4 +1,4 @@
-var moment=require("moment")
+
 // console.log(process.version);
 // console.log(process.cwd());
 // var fs=require("fs")
@@ -122,3 +122,5 @@ var moment=require("moment")
 //     console.log(x)
 // })
 // // 数组的过滤的方法及联合方法示例 结束
+
+
