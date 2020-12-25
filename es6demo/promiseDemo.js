@@ -101,83 +101,98 @@
 // console.log(numbers.reduce(getSum))
 // return
 
-function promiseCreator() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log('timer 1000ms')
-            resolve()
-        }, 1000)
-    })
-}
+//#region promise串行化执行示例
+// function promiseCreator() {
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             console.log('timer 1000ms')
+//             resolve()
+//         }, 1000)
+//     })
+// }
+// function promiseCreator2() {
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             console.log('timer 2000ms')
+//             resolve()
+//         }, 2000)
+//     })
+// }
+// function promiseCreator3() {
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             console.log('timer 3000ms')
+//             resolve()
+//         }, 3000)
+//     })
+// }
+// function promiseCreator4() {
+//     return new Promise(resolve => {
+//         setTimeout(() => {
+//             console.log('timer 4000ms')
+//             resolve()
+//         }, 4000)
+//     })
+// }
+// const promiseCreatorList = [
+//     promiseCreator, promiseCreator4, promiseCreator2, promiseCreator3,
+// ]
 
-function promiseCreator2() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log('timer 2000ms')
-            resolve()
-        }, 2000)
-    })
-}
+// function promiseChain(promiseCreatorList) {
 
-function promiseCreator3() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log('timer 3000ms')
-            resolve()
-        }, 3000)
-    })
-}
+//     if (promiseCreatorList.length < 2) {
+//         if (promiseCreatorList.length == 1) {
+//             promiseCreatorList[0]().then(resolve => {
 
-function promiseCreator4() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.log('timer 4000ms')
-            resolve()
-        }, 4000)
-    })
-}
-const promiseCreatorList = [
-    promiseCreator, promiseCreator4, promiseCreator2, promiseCreator3,
-]
+//             })
+//         }
+//     } else {
+//         promiseCreatorList.reduce((head, next) => {
+//             console.log(head, next)
+//             if (typeof head.then === 'function') {
+//                 return head.then(resolve => {
+//                     return next().then(resolve => {
+//                         return Promise.resolve()
+//                     })
+//                 })
+//             } else {
+//                 return head().then(resolve => {
+//                     return next().then(resolve => {
+//                         return Promise.resolve()
+//                     })
+//                 })
+//             }
+//         })
+//     }
+// }
+// //最简单的写法
+// // promiseCreatorList.reduce((memo, cur) => {
+// //     return memo.then(cur)
+// // }, Promise.resolve())
+// //promiseChain(promiseCreatorList)
 
-function promiseChain(promiseCreatorList) {
+// const promiseChain2 = async function (ps) {
+//     for (let p of ps) {
+//         const r = await p()
+//     }
+// }
+// // promiseChain2(promiseCreatorList)
+// // https://www.jianshu.com/p/005569312177
+//#endregion
 
-    if (promiseCreatorList.length < 2) {
-        if (promiseCreatorList.length == 1) {
-            promiseCreatorList[0]().then(resolve => {
-
-            })
-        }
-    } else {
-        promiseCreatorList.reduce((head, next) => {
-            console.log(head, next)
-            if (typeof head.then === 'function') {
-                return head.then(resolve => {
-                    return next().then(resolve => {
-                        return Promise.resolve()
-                    })
-                })
-            } else {
-                return head().then(resolve => {
-                    return next().then(resolve => {
-                        return Promise.resolve()
-                    })
-                })
-            }
-        })
-    }
-}
-//最简单的写法
-// promiseCreatorList.reduce((memo, cur) => {
-//     return memo.then(cur)
-// }, Promise.resolve())
-//promiseChain(promiseCreatorList)
-
-const promiseChain2 = async function (ps) {
-    for (let p of ps) {
-        const r = await p()
-    }
-}
-// promiseChain2(promiseCreatorList)
-
-// https://www.jianshu.com/p/005569312177
+//#region promise的状态一旦由pendgin到fulfilled或reject,就不会再更改,而且fulfilled与reject状态不会再相互转换，下面的示例可以说明
+let p1 = new Promise((resolve, reject) => {
+    resolve('success1')
+    resolve('success2')
+})
+p1.then(msg => {
+    console.log(msg)
+})
+let p2 = new Promise((resolve,reject) => {
+    resolve('p2 success')
+    reject('p2 reject')
+})
+p2.then(msg => {
+    console.log(msg)
+})
+//#endregion
