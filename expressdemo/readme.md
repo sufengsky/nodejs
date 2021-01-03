@@ -21,3 +21,6 @@ https://www.expressjs.com.cn/starter/installing.html
 ```
 通过 node app.js(或 node index.js)  启动项目就可以了    
 然后打开浏览器访问 http://localhost:3001 就可以看到正确返回的内容了
+
+
+使用 joi库进行请求参数验证
