@@ -24,3 +24,9 @@ https://www.expressjs.com.cn/starter/installing.html
 
 
 使用 joi库进行请求参数验证
+
+
+# 2020-12-31
+安装nodemon监控文件变化重启服务器    
+1、 npm install -g nodemon   
+2、 nodemon app.js
