@@ -180,19 +180,129 @@
 // // https://www.jianshu.com/p/005569312177
 //#endregion
 
-//#region promise的状态一旦由pendgin到fulfilled或reject,就不会再更改,而且fulfilled与reject状态不会再相互转换，下面的示例可以说明
-let p1 = new Promise((resolve, reject) => {
-    resolve('success1')
-    resolve('success2')
-})
-p1.then(msg => {
-    console.log(msg)
-})
-let p2 = new Promise((resolve,reject) => {
-    resolve('p2 success')
-    reject('p2 reject')
-})
-p2.then(msg => {
-    console.log(msg)
-})
-//#endregion
+// //#region promise的状态一旦由pendgin到fulfilled或reject,就不会再更改,而且fulfilled与reject状态不会再相互转换，下面的示例可以说明
+// let p1 = new Promise((resolve, reject) => {
+//     resolve('success1')
+//     resolve('success2')
+// })
+// p1.then(msg => {
+//     console.log(msg)
+// })
+// let p2 = new Promise((resolve,reject) => {
+//     resolve('p2 success')
+//     reject('p2 reject')
+// })
+// p2.then(msg => {
+//     console.log(msg)
+// })
+// //#endregion
+
+
+//#region  promise执行顺序问题,在resolve的回调函数里是异步执行的
+// let p = new Promise(resolve => {
+//     console.log('inital')
+//     resolve(42)
+// })
+// p.then((value) => {
+//     console.log(value)
+// })
+// console.log('outer')
+// //输出结果:
+// inital
+// outer
+// 42
+////#endregion
+
+let routes = [{
+        path: '/',
+        name: 'index',
+        component: {
+            cname: 'index'
+        }
+    },
+    {
+        path: '/news',
+        name: 'news',
+        component: {
+            cname: 'news'
+        },
+        children: [{
+            path: 'add',
+            name: 'newsadd',
+            component: {
+                cname: 'newsadd'
+            }
+        }, {
+            path: 'edit',
+            name: 'newsedit',
+            component: {
+                cname: 'newsedit'
+            },
+            children: [{
+                path: 'simple',
+                name: 'simpleedit',
+                component: {
+                    cname: 'simpleedit'
+                }
+            }, {
+                path: 'complex',
+                name: 'complexeidt',
+                component: {
+                    cname: 'complexedit'
+                }
+            }]
+        }, {
+            path: 'list',
+            name: 'newslist',
+            component: {
+                cname: 'newslist'
+            }
+        }]
+    },
+    {
+        path: '*',
+        name: 'error',
+        component: {
+            cname: 'error'
+        }
+    }
+]
+
+let nodeArray = []
+let result = []
+
+function treeTravelDFS(treeRoot) {
+    treeRoot.forEach(child => {
+        if (child.children) {
+            nodeArray.push(child.path)
+            treeTravelDFS(child.children)
+            nodeArray.pop()
+        } else {
+            result.push({
+                path: nodeArray.join('/') + '/' + child.path,
+                name: child.path,
+                component: child.component
+            })
+        }
+    })
+}
+
+
+
+function routesTransfer() {
+    routes.forEach(tree => {
+        if (tree.children) {
+            nodeArray.push(tree.path)
+            treeTravelDFS(tree.children)
+            nodeArray.pop()
+        } else {
+            result.push({
+                path: tree.path,
+                name: tree.name,
+                component: tree.component
+            })
+        }
+    })
+}
+routesTransfer()
+console.log(result)
