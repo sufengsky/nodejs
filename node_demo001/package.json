@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "phantomjs":"node_modules/.bin/phantomjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "node-xlsx": "^0.15.0"
+  },
+  "devDependencies": {
+    "phantomjs": "^2.1.7+deprecated"
   }
 }

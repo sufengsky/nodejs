@@ -5,7 +5,12 @@
     npm install node-xlsx --save
 
 
-
+# Phantomjs 抓取网页数据内容    
+参考 https://segmentfault.com/a/1190000009409131
+## 1.安装所需模块
+    cnpm install phantomjs --save-dev
+## 2.运行程序
+    npm run phantomjs phantomjsDemo.js
 
 
 
