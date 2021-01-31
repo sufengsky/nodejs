@@ -5,7 +5,7 @@ class Family extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            Persons: ['爸爸', '妈妈'],
+            Persons: ['张三', '李四'],
             pname: '',
         }
     }
@@ -20,7 +20,7 @@ class Family extends React.Component {
                 <ul className='p-list'>
                     {
                         this.state.Persons.map((p, index) => {
-                            return <li key={p + index} onClick={this.deletePerson.bind(this,index)}>{p}</li>
+                            return <li key={p + index} data-index={index} onClick={this.deletePerson}>{p}</li>
                         })
                     }
                 </ul>
@@ -40,13 +40,17 @@ class Family extends React.Component {
             pname: ''
         })
     }
-    deletePerson = (i) => {
-        let Persons = [...this.state.Persons]
-        Persons.splice(i, 1)
-        this.setState({
-            Persons
-        })
+    deletePerson = (e) => {
+        let index = e.target.getAttribute('data-index')
+        if (index) {
+            let Persons = [...this.state.Persons]
+            Persons.splice(index, 1)
+            this.setState({
+                Persons
+            })
+        }
     }
+
 }
 
 export default Family
