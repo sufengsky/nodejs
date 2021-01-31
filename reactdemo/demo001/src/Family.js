@@ -16,7 +16,7 @@ class Family extends React.Component {
         return (
             <div>
                 <div>
-                    <input value={this.state.pname} onChange={this.pnamechange} />
+                    <input value={this.state.pname} onChange={this.pnamechange} ref={input => this.input = input} />
                     <button onClick={this.add}>增加人员</button>
                 </div>
                 {
@@ -46,7 +46,12 @@ class Family extends React.Component {
 
     //#region dom 方法
     pnamechange = (e) => {
-        console.log(e.target.value)
+        //#region 使用ref的方法拿到dom中元素及属性
+        // console.log(this.input)
+        // console.log(this.input.value)
+        ////#endregion
+        
+        //console.log(e.target.value)
         this.setState({
             pname: e.target.value
         })
