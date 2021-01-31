@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
 
 class Person extends Component {
     constructor(props) {
@@ -24,8 +25,19 @@ class Person extends Component {
         console.log('Person-->componentWillReceiveProps');
     }
     // shouldComponentUpdate() {
-        
+
     // }
 }
 
+//#region 增加prop的约束
+Person.propTypes = {
+    persons: PropTypes.array,
+    del: PropTypes.func.isRequired
+}
+//#endregion
+//#region 增加属性的默认值设置
+Person.defaultProps = {
+    persons: []
+}
+//#endregion
 export default Person;
