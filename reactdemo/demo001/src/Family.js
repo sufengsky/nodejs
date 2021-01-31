@@ -1,4 +1,5 @@
 import React from "react"
+import Person from './Person'
 
 class Family extends React.Component {
 
@@ -11,23 +12,39 @@ class Family extends React.Component {
     }
 
     render() {
+        console.log("Family-->render")
         return (
             <div>
                 <div>
                     <input value={this.state.pname} onChange={this.pnamechange} />
                     <button onClick={this.add}>增加人员</button>
                 </div>
-                <ul className='p-list'>
-                    {
-                        this.state.Persons.map((p, index) => {
-                            return <li key={p + index} data-index={index} onClick={this.deletePerson}>{p}</li>
-                        })
-                    }
-                </ul>
+                {
+                    this.state.Persons.length > 0 ? <Person persons={this.state.Persons} del={this.deletePerson} /> : null
+                }
             </div>
         )
     }
 
+    //#region 生命周期函数
+    componentWillMount() {
+        console.log('Family-->componentWillMount')
+    }
+    componentDidMount() {
+        console.log('Family-->componentDidMount')
+    }
+    componentWillUpdate() {
+        console.log('Family-->componentWillUpdate')
+    }
+    componentDidUpdate() {
+        console.log('Family-->componentDidUpdate')
+    }
+    componentWillUnmount() {
+        console.log('Family-->componentWillUnmount');
+    }
+    //#endregion
+
+    //#region dom 方法
     pnamechange = (e) => {
         console.log(e.target.value)
         this.setState({
@@ -40,16 +57,14 @@ class Family extends React.Component {
             pname: ''
         })
     }
-    deletePerson = (e) => {
-        let index = e.target.getAttribute('data-index')
-        if (index) {
-            let Persons = [...this.state.Persons]
-            Persons.splice(index, 1)
-            this.setState({
-                Persons
-            })
-        }
+    deletePerson = (index) => {
+        let Persons = [...this.state.Persons]
+        Persons.splice(index, 1)
+        this.setState({
+            Persons
+        })
     }
+    //#endregion
 
 }
 
