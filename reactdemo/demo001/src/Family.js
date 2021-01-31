@@ -20,7 +20,7 @@ class Family extends React.Component {
                 <ul className='p-list'>
                     {
                         this.state.Persons.map((p, index) => {
-                            return <li key={p + index}>{p}</li>
+                            return <li key={p + index} onClick={this.deletePerson.bind(this,index)}>{p}</li>
                         })
                     }
                 </ul>
@@ -35,10 +35,16 @@ class Family extends React.Component {
         })
     }
     add = () => {
-        this.state.Persons.push(this.state.pname)
         this.setState({
-            Persons: this.state.Persons,
+            Persons: [...this.state.Persons, this.state.pname],
             pname: ''
+        })
+    }
+    deletePerson = (i) => {
+        let Persons = [...this.state.Persons]
+        Persons.splice(i, 1)
+        this.setState({
+            Persons
         })
     }
 }
