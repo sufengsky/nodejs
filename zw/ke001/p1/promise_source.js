@@ -74,4 +74,6 @@ let p = createPromise(1000)
 
 p.then(() => {
     console.log('hello world')
+}).then(() => {
+    console.log('hello 2')
 })
