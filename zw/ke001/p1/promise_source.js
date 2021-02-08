@@ -1,79 +1,102 @@
 class CustomPromise {
-
     constructor(handleFunc) {
         this.status = 'pending'
         this.value = undefined
         this.fulfilledList = []
-        this.reason = undefined
-        this.rejectList = []
 
         handleFunc(this.triggerResolve.bind(this), this.triggerReject.bind(this))
     }
-
     triggerResolve(val) {
-        //通过setTimeout将 resolve函数的回调执行放到下一个事件循环中
         setTimeout(() => {
-            if (this.status != 'pending') return
+            if (this.status !== 'pending') return
 
-            if (val instanceof CustomPromise) {
-                val.then(
-                    value => { },
-                    error => { }
-                )
-            } else {
-                this.status = 'fulfilled'
-                this.value = val
-                this.fulfilledList.forEach(item => item(val))
-                this.fulfilledList = []
-            }
+            this.status = 'fulfilled'
+            this.value = val
+            this.fulfilledList.forEach(item => item(val))
+            this.fulfilledList = []
         }, 0)
     }
-    triggerReject() {
+    triggerReject(val) {
 
     }
     then(onFulfilled, onRejected) {
-        const { status, value } = this;
-        const promiseInstance = new CustomPromise((onNextFulfilled, onNextRejected) => {
+        const { status, value } = this
+
+        let p = new CustomPromise((onNextfulled, onNextRejected) => {
+            function onFinalResolve(val) {
+                if (typeof onFulfilled !== 'function') {
+                    //用户在定义promise时传的不是一个函数
+                    onNextfulled(val)
+                } else {
+                    //#region 用户定义promise时传入的是一个函数
+                    let result = onFulfilled(val)
+                    if (result && result.then === 'function') {
+                        //用户定义时传的是一个函数并且执行结果是一个promise
+                        result.then(onNextfulled)
+                    } else {
+                        //用户定义时传的是一个函数并且执行结果不是一个promise
+                        onNextfulled(result)
+                    }
+                    //#region
+                }
+            }
+
             switch (status) {
                 case 'pending': {
-                    this.fulfilledList.push(onFulfilled)
-                    this.rejectList.push(onRejected)
+                    this.fulfilledList.push(onFinalResolve)
+                    break
+                }
+                case 'fulfilled': {
+
+                    break;
+                }
+                default: {
+                    break
                 }
             }
         })
-        return promiseInstance
+
+        return p
     }
 
-
-
-    catch() {
-
+    static resolve(val) {
+        return new CustomPromise
     }
-
-    static resolve() {
-
-    }
-    static reject() {
-
-    }
-    static all() {
-
-    }
-    static race() {
+    static rejected(val) {
 
     }
 }
 
-function createPromise(time) {
-    return new CustomPromise(function (resolve, reject) {
-        return setTimeout(resolve, time)
-    })
-}
 
-let p = createPromise(1000)
+// let p = Promise.resolve('abc')
+// console.log(p)
+
+let p = new CustomPromise((resolve, reject) => {
+    console.log('resolve')
+    setTimeout(() => {
+        resolve()
+    }, 1000)
+})
 
 p.then(() => {
-    console.log('hello world')
-}).then(() => {
-    console.log('hello 2')
+    console.log('test')
 })
+
+
+// let p = new CustomPromise(function (resolve, reject) {
+//     setTimeout(() => {
+//         resolve()
+//     }, 1000)
+// })
+
+// p.then(() => {
+//     console.log('resolved')
+//     return 'abc'
+// }, () => {
+//     console.log('rejected')
+// }).then((val) => {
+//     console.log(val)
+//     return val + '2222'
+// }).then(val => {
+//     console.log(val)
+// })
