@@ -59,11 +59,28 @@ class CustomPromise {
         return p
     }
 
-    static resolve(val) {
-        return new CustomPromise
+    catch(onReject) {
+        return this.then(null, onReject)
     }
-    static rejected(val) {
 
+    static all(list) {
+        return new CustomPromise((resolve, reject) => {
+            let count = 0
+            let values = []
+            for (const [i, p] of list.entries()) {
+                p.then((val) => {
+                    count++
+                    values[i] = val
+                    if (count === length) resolve(values)
+                }, (error) => {
+                    reject(error)
+                })
+            }
+        })
+
+    }
+    static resolve(val) {
+        return new CustomPromise(resovle => resovle(val))
     }
 }
 
@@ -71,16 +88,16 @@ class CustomPromise {
 // let p = Promise.resolve('abc')
 // console.log(p)
 
-let p = new CustomPromise((resolve, reject) => {
-    console.log('resolve')
-    setTimeout(() => {
-        resolve()
-    }, 1000)
-})
+// let p = new CustomPromise((resolve, reject) => {
+//     console.log('resolve')
+//     setTimeout(() => {
+//         resolve()
+//     }, 1000)
+// })
 
-p.then(() => {
-    console.log('test')
-})
+// p.then(() => {
+//     console.log('test')
+// })
 
 
 // let p = new CustomPromise(function (resolve, reject) {
@@ -100,3 +117,15 @@ p.then(() => {
 // }).then(val => {
 //     console.log(val)
 // })
+
+
+const createPromise = function (time) {
+    return new CustomPromise(function (resolve, reject) {
+        setTimeout(function () { resolve(new Date().getTime()) }, time);
+    });
+}
+
+Promise.all([createPromise(2000), createPromise(3000)])
+    .then(res => {
+        console.log("Promise.all", res);
+    });
