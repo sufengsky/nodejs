@@ -67,17 +67,37 @@ class CustomPromise {
         return new CustomPromise((resolve, reject) => {
             let count = 0
             let values = []
-            for (const [i, p] of list.entries()) {
-                p.then((val) => {
+            // for (const [i, p] of list.entries()) {
+            //     p.then((val) => {
+            //         count++
+            //         values[i] = val
+            //         if (count === length) resolve(values)
+            //     }, (error) => {
+            //         reject(error)
+            //     })
+            // }
+
+            list.forEach((i, p) => {
+                p.then(val => {
                     count++
                     values[i] = val
-                    if (count === length) resolve(values)
-                }, (error) => {
+                    if (count == list.length) resolve(values)
+                }, error => {
                     reject(error)
                 })
-            }
+            })
         })
-
+    }
+    static race(list) {
+        return new CustomPromise((resovle, reject) => {
+            list.forEach(item => {
+                item.then((val) => {
+                    resovle()
+                }, (error) => {
+                    reject()
+                })
+            })
+        })
     }
     static resolve(val) {
         return new CustomPromise(resovle => resovle(val))
@@ -121,11 +141,17 @@ class CustomPromise {
 
 const createPromise = function (time) {
     return new CustomPromise(function (resolve, reject) {
+        
         setTimeout(function () { resolve(new Date().getTime()) }, time);
     });
 }
 
-Promise.all([createPromise(2000), createPromise(3000)])
+Promise.all([createPromise(1000), createPromise(3000)])
     .then(res => {
         console.log("Promise.all", res);
     });
+
+Promise.race([createPromise(1000), createPromise(3000)])
+.then(res => {
+    console.log("Promise.race", res);
+});
