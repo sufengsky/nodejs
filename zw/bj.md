@@ -307,3 +307,8 @@ npm i --save-dev  bable-core@6 babel-loader@7 babel-preset-env babel-preset-stag
 # Vue源码解析
 
 Vue使用Object.defineProperty+观察者模式和模块进行绑定，对于数据来说需要进行更新时，即会触发对应的getter和setter函数。在setter函数中，即可对应收集到的依赖，触发对应视图层更新。
+
+
+# Webpack前端打包工具
+
+babel编译出来的结果是将import export 转换为符合 Commonjs规范的require 和 exports 内容
