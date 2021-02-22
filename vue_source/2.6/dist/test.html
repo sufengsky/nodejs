@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <script src='vue_my.js'></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+
+        var vm = new Vue({
+            template:
+                `<div>
+                <p>{{a}}</p>
+                <p>{{b}}</p>
+                </div>`,
+            data() {
+                return {
+                    a: 1,
+                    b: 2
+                }
+            }
+        })
+
+
+        console.dir(Vue.config)
+
+        vm.$mount(document.getElementById('app'));
+
+
+        var hyphenateRE = /\B([A-Z])/g;
+        var camelizeRE = /-(\w)/g;
+        var hyphenate = function (str) {
+            //return str.replace(hyphenateRE, '-$1').toLowerCase()
+
+            return str.replace(camelizeRE, function (_, c) { return c ? c.toUpperCase() : ''; })
+        };
+
+        console.log(hyphenate('padding-left'))
+
+
+    </script>
+</body>
+
+</html>
