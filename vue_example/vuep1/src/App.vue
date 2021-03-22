@@ -3,11 +3,10 @@
     {{ title }}
     <router-view @viewIn="changeTitle"></router-view>
     <hello-world>
-        <template v-slot:footer>footer</template>
+      <template v-slot:footer>footer</template>
       <template v-slot:header>
         <h1>Here might be a page title</h1>
-      </template>
-      
+      </template>     
       
     </hello-world>
   </div>
@@ -15,6 +14,7 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
+import axios from 'axios'
 
 export default {
   name: "App",
@@ -32,12 +32,16 @@ export default {
     },
   },
   mounted() {
-    this.$router.push({
-      path: "/bus/ca",
-      query: {
-        param: "abc",
-      },
-    });
+    // this.$router.push({
+    //   path: "/bus/ca",
+    //   query: {
+    //     param: "abc",
+    //   },
+    // });
+
+    axios.get("http://127.0.0.1:3000").then((res)=>{
+      console.log(res)
+    })
   },
 };
 </script>
