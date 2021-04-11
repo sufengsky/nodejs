@@ -1,4 +1,5 @@
 const express = require("express");
+const userService = require("../service/userService");
 
 //定义当前模块路由
 const userRoute = express.Router();
@@ -6,6 +7,12 @@ const userRoute = express.Router();
 userRoute.get("/user/list", (req, res) => {
   //获取通过url传过来的参数
   res.send(req.query);
+});
+userRoute.get("/user/list2", async (req, res) => {
+  res.json({
+    code: 0,
+    data: await userService.getUsers(),
+  });
 });
 
 userRoute.get("/user/:id", (req, res) => {
