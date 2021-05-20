@@ -6,14 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>layui-demo001基本使用</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
 </head>
 
 <body>
+    <button type="button" class="layui-btn" id="btnExport">导出</button>
     <script src='./layui/layui.js'></script>
     <script>
         layui.use('layer', function () {
+            var $ = layui.jquery
+            console.log($)
             var layer = layui.layer
-            layer.msg('hello world')
+            //layer.msg('hello world')
+
+            console.log($('#bntExport'))
+            $("#btnExport").click(function () {
+                layer.msg("hello")
+            })
         })
     </script>
 </body>
