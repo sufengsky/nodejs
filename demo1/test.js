@@ -57,3 +57,6 @@
 // console.log(null ?? 'default') // 'default'
 // console.log(false ?? 'default') // 'false'
 // console.log(0 ?? 'default') // 0
+
+
+console.log(Number.parseInt('100.3'))
