@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>增加引用插件</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src='./layui/layui.js'></script>
+</head>
+
+<body style="padding-left:30px;">
+    <div id="demo1" style="width: 300px; margin: 20px;"></div>
+    <br />
+    <button type="button" class="layui-btn" id='btnGetValue'>获取值</button>
+
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //加载组件
+        layui.config({
+            base: './layui/plugins/xmSelect/'
+        }).extend({
+            xmSelect: 'xm-select'
+        }).use(['xmSelect'], function () {
+            var xmSelect = layui.xmSelect;
+            var $ = layui.$;
+
+            var listData = [
+                { name: '全部', value: 0 },
+                { name: '张三', value: 1 },
+                { name: '李四', value: 2 },
+                { name: '王五', value: 3 },
+            ]
+            //渲染多选
+            var demo1 = xmSelect.render({
+                el: '#demo1',
+                data: listData,
+
+                //#region 自定义渲染
+                model: {
+                    label: {
+                        type: 'sfMultiSelect',
+                        sfMultiSelect: {
+                            template(data, sels) {
+                                if (sels.length > 1) {
+                                    const minVal = Math.min(...sels.map(x => x.value))
+                                    const minObj = sels.find(x => x.value == minVal)
+                                    return `${minObj.name}等${sels.length}人`
+                                } else if (sels.length == 1) {
+                                    return sels[0].name
+                                } else {
+                                    return ''
+                                }
+                            }
+                        },
+                    }
+                },
+                //#endregion
+
+                //#region 选择监听事件处理
+                on: function (data) {
+                    var arr = data.arr
+                    var change = data.change
+                    var isAdd = data.isAdd
+
+                    if (isAdd) {
+                        var allItem = change.find(x => x.value == 0)
+                        if (allItem) {
+                            return [allItem];
+                        }
+
+                        allItem = arr.find(x => x.value == 0)
+                        if (allItem) {
+                            return change;
+                        } else {
+                            if (arr.length == listData.length - 1) {
+                                return [listData[0]]
+                            }
+                        }
+                    }
+                },
+                //#endregion
+            })
+
+            $("#btnGetValue").click(function () {
+                console.log(demo1.getValue())
+            })
+
+        })
+    </script>
+
+</body>
+
+</html>
