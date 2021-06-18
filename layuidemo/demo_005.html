@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态渲染表单中的checkbox</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src='./layui/layui.js'></script>
+</head>
+
+<body style="padding-left:30px;">
+    <div class="layui-inline">
+        <div class="layui-form layui-inline" id="prop" lay-filter="testaa"></div>
+        <button type="button" class="layui-btn layui-btn-primary">导出excel表格</button>
+    </div>
+
+    <script type="text/javascript">
+        layui.use(['form'], function () {
+            var form = layui.form
+                , $ = layui.$
+            var res = [
+                {
+                    name: '苹果'
+                },
+                {
+                    name: '香蕉'
+                }
+            ]
+            var html = ""
+            for (var i in res) {
+                html += `<input type="checkbox" name="like[write]" title="${res[i].name}" lay-skin="primary" value="attribute1" lay-filter="textCheck">`
+            }
+            $('#prop').html(html)
+            form.render(null, 'testaa');//渲染页面
+            form.on('checkbox(textCheck)', function (data) {
+                console.log(data.elem); //得到checkbox原始DOM对象
+                console.log(data.elem.checked); //是否被选中，true或者false
+                console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+                console.log(data.othis); //得到美化后的DOM对象
+            });
+        })
+    </script>
+
+    <!-- 参考 https://blog.csdn.net/haibo0668/article/details/83247064 -->
+</body>
+
+</html>
