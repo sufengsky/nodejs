@@ -1,23 +1,20 @@
 const express = require("express");
-var bodyParser = require('body-parser'); //用于解析body中的数据
+var bodyParser = require("body-parser"); //用于解析body中的数据
 const cors = require("cors");
 
-//#region 添加自定义路由
-//引用用户模块的路由
-const userRoute = require("./routes/user");
-const demoRoute = require("./routes/demo");
-//#endregion
+//导入路由
+const routes = require("./routes");
 
 //创建应用
 const app = express();
 
 //#region 增加中间件的使用
 app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-//使用用户模块的路由
-app.use(userRoute);
-app.use(demoRoute);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//路由初始化
+routes(app);
 //#endregion
 
 app.get("/", (req, res) => {

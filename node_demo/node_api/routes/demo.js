@@ -2,7 +2,7 @@ const express = require("express");
 
 const demoRoute = express.Router();
 
-demoRoute.get("/demo/index", (req, res) => {
+demoRoute.get("/index", (req, res) => {
   let user = {
     name: "SF",
     age: 20,
