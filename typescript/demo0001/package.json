@@ -1,0 +1,20 @@
+{
+  "name": "demo0001",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --config webpack.config.js --mode development",
+    "dev": "npx webpack-dev-server --mode development --content-base ./dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-loader": "^7",
+    "typescript": "^4.3.4",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
