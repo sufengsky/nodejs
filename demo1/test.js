@@ -217,6 +217,30 @@ let persons = [{
 
 
 
-let i='CCWList'
+// let i = 'CCWList'
 
-console.log(i != 'BXWList' || i != 'CCWList')
+// console.log(i != 'BXWList' || i != 'CCWList')
+
+
+// setTimeout(() => {
+//     console.log("setTimeout")
+//     Promise.resolve().then(() => {
+//         console.log('setimeout-promise')
+//     })
+// }, 1000);
+// Promise.resolve().then(() => {
+//     console.log('B')
+//     Promise.resolve().then(() => {
+//         console.log("BB")
+//     })
+// })
+// console.log('A')
+
+
+
+setTimeout(() => {
+    console.log("setTimeout")
+}, 0);
+Promise.resolve().then(() => {
+    console.log('B')
+})
